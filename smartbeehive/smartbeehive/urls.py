@@ -22,8 +22,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('app.urls')),
     path('', include('act_auth.urls')),
+    path('sensors/', include('sensors.urls')),
     path('act_auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('act_auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  
+    path('act_auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+      
 ]
 
 

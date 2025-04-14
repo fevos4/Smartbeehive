@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
-    'act_auth'
+    'act_auth',
+    'sensors'
 ]
 
 REST_FRAMEWORK = {
@@ -56,7 +57,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=180),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': True,  # Rotate refresh tokens to prevent reuse
     'BLACKLIST_AFTER_ROTATION': True,  # Blacklist old refresh tokens after rotation
