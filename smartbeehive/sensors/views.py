@@ -8,10 +8,39 @@ from django.shortcuts import get_object_or_404
 import csv
 from django.http import HttpResponse
 from rest_framework.viewsets import ViewSet
+from datetime import datetime
+from rest_framework.exceptions import ValidationError
 
 # ----------------------------------------------------------------------------
 # API View Endpoints for Beehive Operations
 # ----------------------------------------------------------------------------
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_beehive_history(request, pk):
+    beehive = get_object_or_404(Beehive, pk=pk, user=request.user)
+    metrics = beehive.metrics.all()
+
+    # Optional query params: ?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD
+    start_date = request.query_params.get('start_date')
+    end_date = request.query_params.get('end_date')
+
+    if start_date:
+        try:
+            start = datetime.fromisoformat(start_date)
+            metrics = metrics.filter(created_at__gte=start)
+        except ValueError:
+            raise ValidationError({'start_date': 'Invalid date format. Use YYYY-MM-DD'})
+
+    if end_date:
+        try:
+            end = datetime.fromisoformat(end_date)
+            metrics = metrics.filter(created_at__lte=end)
+        except ValueError:
+            raise ValidationError({'end_date': 'Invalid date format. Use YYYY-MM-DD'})
+
+    metrics = metrics.order_by('-created_at')
+    serializer = BeehiveMetricsSerializer(metrics, many=True)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import BeehiveViewSet, export_metrics_csv, get_beehives, create_beehive, get_beehive, update_beehive, delete_beehive
+from .views import BeehiveViewSet, export_metrics_csv, get_beehives, create_beehive, get_beehive, update_beehive, delete_beehive, get_beehive_history
 
 # Initialize the router and register the BeehiveViewSet
 router = DefaultRouter()
@@ -13,6 +13,8 @@ urlpatterns = [
     path('api/beehive/<int:pk>/', get_beehive, name='get_beehive'),
     path('api/beehive/<int:pk>/update/', update_beehive, name='update_beehive'),
     path('api/beehive/<int:pk>/delete/', delete_beehive, name='delete_beehive'),
+    path('api/beehive/<int:pk>/history/', get_beehive_history, name='beehive_history'),
+
     
     # URL pattern for the ViewSet routes (using DefaultRouter)
     path('', include(router.urls)),
