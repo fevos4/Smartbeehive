@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'act_auth',
-    'sensors'
+    'sensors',
+    'notifications'
 ]
 
 REST_FRAMEWORK = {
