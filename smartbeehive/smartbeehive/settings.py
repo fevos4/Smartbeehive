@@ -44,8 +44,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'act_auth',
-    'sensors',
-    'notifications'
+    'drf_yasg',
+    'notifications',
+    'beehive_metrics',
+    'beehive'
 ]
 
 REST_FRAMEWORK = {
@@ -78,9 +80,8 @@ MIDDLEWARE = [
      'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
+CORS_ALLOW_ALL_ORIGINS = True 
+
 
 ROOT_URLCONF = 'smartbeehive.urls'
 
