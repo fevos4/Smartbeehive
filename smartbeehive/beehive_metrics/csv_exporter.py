@@ -1,5 +1,3 @@
-# beehive_metrics/csv_exporter.py
-
 import csv
 from django.http import HttpResponse
 from .models import BeehiveMetrics
@@ -13,14 +11,14 @@ def generate_csv_response(beehive_id):
     response['Content-Disposition'] = f'attachment; filename="beehive-metrics-{beehive_id}.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(['Created At', 'Temperature', 'Humidity', 'CO2', 'Weight'])
+    writer.writerow(['Created At', 'Temperature', 'Humidity', 'External Temperature', 'Weight'])
 
     for metric in metrics:
         writer.writerow([
             metric.created_at,
             metric.Temperature,
             metric.Humidity,
-            metric.CO2,
+            metric.external_temperature,
             metric.Weight,
         ])
 

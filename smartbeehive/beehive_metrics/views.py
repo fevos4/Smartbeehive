@@ -18,22 +18,22 @@ def metrics_list(request):
         serializer = BeehiveMetricsSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_metrics_by_beehive_id(request, beehive_id):
     metrics = BeehiveMetrics.objects.filter(beehive_id=beehive_id)
     if not metrics.exists():
-        return Response({'detail': 'Beehive metrics not found'}, status=404)
+        return Response({'detail': 'Beehive metrics not found'}, status=status.HTTP_404_NOT_FOUND)
 
     data = [
         {
             'createdAt': metric.created_at,
             'temperature': metric.Temperature,
             'humidity': metric.Humidity,
-            'CO2': metric.CO2
+            'externalTemperature': metric.external_temperature
         }
         for metric in metrics
     ]
@@ -45,13 +45,13 @@ def update_metrics(request, id):
     try:
         metric = BeehiveMetrics.objects.get(id=id)
     except BeehiveMetrics.DoesNotExist:
-        return Response({'detail': 'Not found'}, status=404)
+        return Response({'detail': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
 
     serializer = BeehiveMetricsSerializer(metric, data=request.data, partial=True)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
-    return Response(serializer.errors, status=400)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
@@ -59,9 +59,9 @@ def delete_metrics(request, id):
     try:
         metric = BeehiveMetrics.objects.get(id=id)
         metric.delete()
-        return Response({'message': 'Beehive metrics deleted successfully'}, status=200)
+        return Response({'message': 'Beehive metrics deleted successfully'}, status=status.HTTP_200_OK)
     except BeehiveMetrics.DoesNotExist:
-        return Response({'detail': 'Not found'}, status=404)
+        return Response({'detail': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

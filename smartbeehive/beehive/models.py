@@ -1,14 +1,11 @@
 from django.db import models
-
-# Create your models here.
-
 from django.conf import settings
 
 class Beehive(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255, null=True, blank=True)
-    CO2 = models.CharField(max_length=255, null=True, blank=True)
+    external_temperature = models.CharField(max_length=255, null=True, blank=True)  # Replaces CO2
     temperature = models.CharField(max_length=255, null=True, blank=True)
     humidity = models.CharField(max_length=255, null=True, blank=True)
     weight = models.CharField(max_length=255, null=True, blank=True)
@@ -19,7 +16,7 @@ class Beehive(models.Model):
 
 class BeehiveMetrics(models.Model):
     beehive = models.ForeignKey(Beehive, related_name='metrics', on_delete=models.CASCADE)
-    CO2 = models.CharField(max_length=255)
+    external_temperature = models.CharField(max_length=255)  # Replaces CO2
     temperature = models.CharField(max_length=255)
     humidity = models.CharField(max_length=255)
     weight = models.CharField(max_length=255)

@@ -1,6 +1,4 @@
 from django.shortcuts import render
-
-# Create your views here.
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -22,14 +20,14 @@ def get_beehives(request):
 @permission_classes([IsAuthenticated])
 def create_beehive(request):
     data = request.data
-    if not all(key in data for key in ('name', 'location', 'CO2', 'temperature', 'humidity', 'weight', 'battery_level')):
+    if not all(key in data for key in ('name', 'location', 'external_temperature', 'temperature', 'humidity', 'weight', 'battery_level')):
         return Response({"error": "All fields are mandatory"}, status=status.HTTP_400_BAD_REQUEST)
     
     beehive = Beehive.objects.create(
         user=request.user,
         name=data['name'],
         location=data['location'],
-        CO2=data['CO2'],
+        external_temperature=data['external_temperature'],
         temperature=data['temperature'],
         humidity=data['humidity'],
         weight=data['weight'],
@@ -37,7 +35,7 @@ def create_beehive(request):
     )
     beehive_metrics = BeehiveMetrics.objects.create(
         beehive=beehive,
-        CO2=data['CO2'],
+        external_temperature=data['external_temperature'],
         temperature=data['temperature'],
         humidity=data['humidity'],
         weight=data['weight'],
@@ -56,7 +54,7 @@ def get_beehive(request, id):
     beehive = get_object_or_404(Beehive, id=id, user=request.user)
     latest_metrics = BeehiveMetrics.objects.filter(beehive=beehive).first()
     if latest_metrics:
-        beehive.CO2 = latest_metrics.CO2
+        beehive.external_temperature = latest_metrics.external_temperature
         beehive.temperature = latest_metrics.temperature
         beehive.humidity = latest_metrics.humidity
         beehive.weight = latest_metrics.weight
@@ -72,7 +70,7 @@ def update_beehive(request, id):
     beehive = get_object_or_404(Beehive, id=id, user=request.user)
     data = request.data
     
-    beehive.CO2 = data.get('CO2', beehive.CO2)
+    beehive.external_temperature = data.get('external_temperature', beehive.external_temperature)
     beehive.temperature = data.get('temperature', beehive.temperature)
     beehive.humidity = data.get('humidity', beehive.humidity)
     beehive.weight = data.get('weight', beehive.weight)
