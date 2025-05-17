@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  .landing-container {
+    position: fixed;
+    width: 100%;
+  }
+  
+  .banner-container {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+  }
+  
+  .banner-image {
+    height: 100%;
+    width: 100%;
+    float: left;
+    padding: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    object-fit: cover;
+    z-index: -1;
+  }
+  
+  .color-overlay {
+    height: 100%;
+    width: 100%;
+    float: left;
+    padding: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    object-fit: cover;
+    background-color: rgba(66, 65, 65, 0.527);
+    z-index: -1;
+  }
+  
+  .content-container {
+    position: fixed;
+    top: 350px;
+    left: 380px;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    color: white;
+    text-align: left;
+    padding: 20px;
+  }
+  
+  .content-container p {
+    font-family: 'Raleway', sans-serif;
+    font-size: 18px;
+    max-width: 600px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  .content-container h3 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 40px;
+    margin: 0 0 50px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .hexagon-design {
+    position: fixed;
+    bottom: -100px;
+    right: 0;
+    margin: 0;
+    z-index: -1;
+  }
+  
+  .hexagon-design img {
+    height: 50%;
+    width: 80%;
+    float: right;
+    padding: none;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  .learn-more {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    border-radius: 50px;
+    padding: 10px 30px;
+    background: #FCB43A;
+    color: black;
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    transition: background 0.3s ease;
+  }
+  
+  .learn-more:hover {
+    background: #FFD655;
+  }
+
+  @media screen and (max-width: 768px) {
+    .content-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .content-container p {
+      font-size: 16px;
+    }
+
+    .content-container h3 {
+      font-size: 34px;
+    }
+
+    .hexagon-design {
+      display: none;
+    }
+  }

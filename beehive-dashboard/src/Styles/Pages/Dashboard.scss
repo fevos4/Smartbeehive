@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #E8E3CD;
+}
+.dashboard-container {
+    position: relative;
+}
+
+// .navbar {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     z-index: 0;
+// }
+
+.beehive-cards-container {
+    padding: 2px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+  }
+
+  .beehive-card {
+    cursor: pointer;
+    height: 300px;
+    width: 300px;
+    margin: 20px;
+    box-sizing: border-box;
+    &:hover {
+      transform: translateY(-0.3rem);
+      transition: transform 0.3s ease;
+    }
+  }
+
+  .add-card {
+    height: 300px;
+    width: 300px;
+    margin: 20px;
+    box-sizing: border-box;
+    &:hover {
+      transform: translateY(-0.5rem);
+      transition: transform 0.3s ease;
+    }
+  }
+  .sync-button{
+    cursor: pointer;
+    width: 5rem;
+    height: 2.2rem;
+    font-size: 1.2rem;
+    border-radius: 1rem;
+    &:hover {
+      transform: translateY(-0.3rem);
+      transition: transform 0.3s ease;
+    }
+    border: none;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.351);
+    background-color: #fcffeb;
+
+  }
+  .syncing-text{
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: 'Raleway', sans-serif;
+    color: #000000;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.256);
+  }
+  .loading-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
