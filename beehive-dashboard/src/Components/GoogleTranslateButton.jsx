@@ -17,10 +17,14 @@ const GoogleTranslateButton = () => {
   };
 
   useEffect(() => {
-    const addScript = document.createElement('script');
-    addScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-    addScript.async = true;
-    document.body.appendChild(addScript);
+    // Load the Google Translate script only once
+    if (!document.getElementById('google-translate-script')) {
+      const addScript = document.createElement('script');
+      addScript.id = 'google-translate-script';
+      addScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      addScript.async = true;
+      document.body.appendChild(addScript);
+    }
 
     window.googleTranslateElementInit = () => {
       if (googleTranslateElementRef.current) {
@@ -68,11 +72,7 @@ const GoogleTranslateButton = () => {
   return (
     <div className="google-translate-container">
       <div id="google_translate_element" ref={googleTranslateElementRef} />
-      <select
-        onChange={handleChange}
-        value={language}
-        className="language-select"
-      >
+      <select onChange={handleChange} value={language} className="language-select">
         <option value="" disabled>Select Language</option>
         <option value="en">English</option>
         <option value="am">Amharic</option>

@@ -5,11 +5,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import '../Styles/Components/NavbarBlack.scss';
 import { AuthContext } from '../Context/AuthContext';
 import Notification from './Notification';
+import GoogleTranslateButton from "./GoogleTranslateButton";
 
 function NavbarBlack() {
   const [openLinks, setOpenLinks] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
   const { logout } = useContext(AuthContext);
+  console.log('Logout function from context:', logout);
+
   const navigate = useNavigate();
 
   const toggleNavbar = () => {
@@ -34,6 +37,10 @@ function NavbarBlack() {
     <div className='navb'>
       <div className="navb-logo">
         <Link to="/"><img src={Logo} alt='Logo' /></Link>
+      </div>
+
+      <div className="translate" >
+        <GoogleTranslateButton />
       </div>
 
       <div className="menub-icon" onClick={toggleNavbar}>

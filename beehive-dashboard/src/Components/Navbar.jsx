@@ -24,7 +24,7 @@ function Navbar() {
         <MenuIcon />
       </div>
       <ul className={`nav-menu  ${openLinks && 'active'}`}>
-        <li className='nav-signin'><Link to="/signin">SIGN IN</Link></li>
+        <Link to="/signin" className="learn-more">SIGN IN</Link>
       </ul>
     </div>
   );

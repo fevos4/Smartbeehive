@@ -1,0 +1,55 @@
+.setup-section {
+    background-color: #ffffff;
+    padding: 2.5rem 1.5rem;
+    color: #2d2d2d;
+    font-family: 'Montserrat', sans-serif;
+  
+    .setup-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+  
+    .setup-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1.5rem;
+  
+      .highlight {
+        color: #f97316; // orange-500
+      }
+    }
+  
+    .setup-description {
+      font-size: 0.875rem;
+      @media (min-width: 768px) {
+        font-size: 1rem;
+        padding: 0 5rem;
+      }
+      color: #4b5563; // Tailwind's gray-700
+      margin: 0 auto 2.5rem;
+      text-align: center;
+    }
+  
+    .setup-image-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      align-items: center;
+      justify-content: center;
+  
+      @media (min-width: 1024px) {
+        flex-direction: row;
+      }
+  
+      .setup-image-container {
+        text-align: center;
+  
+        .setup-image {
+          width: 75%;
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+  

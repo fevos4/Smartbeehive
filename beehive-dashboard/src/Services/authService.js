@@ -35,18 +35,24 @@ const login = async (username, password) => {
     }
 };
 
-// Logout (if backend expects token, pass it via Authorization header)
+// Logout with access token in header and refresh token in body
 const logout = async () => {
     const user = getCurrentUser();
-    if (user?.access) {
-        await axios.post(`${API_URL}/logout/`, null, {
-            headers: {
-                Authorization: `Bearer ${user.access}`,
-            },
-        });
+    if (user?.refresh && user?.access) {
+      await axios.post(
+        `${API_URL}/logout/`,
+        { refresh_token: user.refresh },
+        {
+          headers: {
+            Authorization: `Bearer ${user.access}`,  // ✅ REQUIRED!
+          },
+        }
+      );
     }
     localStorage.removeItem('user');
-};
+  };
+  
+  
 
 // Get current user (can use token to hit a protected endpoint if needed)
 const getCurrentUser = () => {

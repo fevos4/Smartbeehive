@@ -291,7 +291,7 @@ const Graphs = () => {
             <div className="graph_card">
               <div className="graph" id="graph2">
                 <div className="graph_details">
-                  <p>Tempreture</p>
+                  <p>Temperature</p>
                   <p className="value">
                     {data[data.length - 1].temperature.toFixed(1)} °C
                   </p>

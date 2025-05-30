@@ -1,0 +1,63 @@
+.impact-section {
+    padding: 4rem 1rem;
+    text-align: center;
+    background-color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+  
+    h2 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 3rem;
+    }
+  
+    .impact-grid {
+      display: grid;
+      gap: 2rem;
+      justify-items: center;
+  
+      @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+  
+      @media (min-width: 1024px) {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  }
+  
+  .impact-card {
+    background-color: #FFEEDC;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    max-width: 20rem;
+    text-align: left;
+  
+    h3 {
+      font-size: 1.125rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+  
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+  
+      li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+  
+        .icon {
+          color: #F28C28;
+          margin-top: 0.25rem;
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+  

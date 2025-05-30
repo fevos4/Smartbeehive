@@ -1,0 +1,80 @@
+.team-section {
+    min-height: 100vh;
+    background-color: #fff;
+    text-align: center;
+    padding: 3rem 1rem;
+    font-family: 'Montserrat', sans-serif;
+  
+    .team-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+    }
+  
+    .team-grid {
+      display: grid;
+      gap: 2.5rem;
+      max-width: 80rem;
+      margin: 0 auto;
+      grid-template-columns: repeat(1, 1fr);
+  
+      &.secondary {
+        margin-top: 2rem;
+        max-width: 48rem;
+        grid-template-columns: repeat(1, 1fr);
+      }
+  
+      @media (min-width: 640px) {
+        grid-template-columns: repeat(2, 1fr);
+  
+        &.secondary {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+  
+      @media (min-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+  
+        &.secondary {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    }
+  
+    .team-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  
+      .hex-wrapper {
+        width: 10rem;
+        height: 10rem;
+        position: relative;
+  
+        .clip-hexagon {
+          width: 100%;
+          height: 100%;
+          border: 4px solid #f97316;
+          overflow: hidden;
+          clip-path: polygon(
+            25% 6.7%, 75% 6.7%,
+            100% 50%, 75% 93.3%,
+            25% 93.3%, 0% 50%
+          );
+  
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+  
+      .team-name {
+        margin-top: 1rem;
+        font-size: 1.125rem;
+        font-weight: 500;
+      }
+    }
+  }
+  

@@ -5,10 +5,10 @@
     padding: 0;
   }
   .landing-container {
-    position: fixed;
     width: 100%;
+    position: relative; /* or remove position entirely */
+    overflow-x: hidden;
   }
-  
   .banner-container {
     position: relative;
     overflow: hidden;

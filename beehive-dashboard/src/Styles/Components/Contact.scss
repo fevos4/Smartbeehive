@@ -1,0 +1,114 @@
+.contact-footer {
+    background-color: #202020;
+    color: #fff;
+    padding: 12px 0;
+    font-family: "Montserrat", sans-serif;
+  
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 16px;
+  
+      @media (min-width: 640px) {
+        padding: 0 24px;
+      }
+  
+      @media (min-width: 1024px) {
+        padding: 0 48px;
+      }
+    }
+  
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+  
+      @media (min-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  
+    .brand-info {
+      .logo-wrapper {
+        cursor: pointer;
+  
+        .logo {
+          width: 128px;
+  
+          @media (min-width: 768px) {
+            width: 160px;
+          }
+  
+          margin-top: 40px;
+        }
+      }
+  
+      .description {
+        color: #d1d5db;
+        margin-top: 16px;
+      }
+    }
+  
+    .links-section,
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+  
+      .section-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 16px;
+        color: #f28c28;
+      }
+  
+      .links-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+  
+        .link {
+          text-decoration: none;
+          color: #fff;
+          transition: color 0.3s;
+  
+          &:hover {
+            color: #f28c28;
+          }
+        }
+      }
+  
+      .contact-detail {
+        margin-bottom: 8px;
+        color: #d1d5db;
+      }
+  
+      .social-links {
+        display: flex;
+        gap: 16px;
+  
+        .social-link {
+          color: #fff;
+          font-size: 24px;
+          transition: color 0.3s;
+  
+          &:hover {
+            color: #f28c28;
+          }
+        }
+      }
+    }
+  
+    .footer-bottom {
+      margin-top: 48px;
+      border-top: 1px solid #f28c28;
+      padding-top: 24px;
+      text-align: center;
+      color: #d1d5db;
+      font-size: 12px;
+    }
+  }
