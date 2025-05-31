@@ -5,6 +5,15 @@ $gray: #4A4A4A;
     width: 100%;
     background-color: $white;
     padding: 0 1.5rem;
+    display: flex;
+    justify-content: center; // Center horizontally
+    align-items: center; // Center vertically
+    min-height: 100vh; // Full viewport height
+    flex-direction: column; // Stack on small screens
+
+    @media (min-width: 768px) {
+        flex-direction: row; // Side by side on larger screens
+    }
 
     .about-content {
         max-width: 1000px;
@@ -61,9 +70,10 @@ $gray: #4A4A4A;
             margin-top: 0;
         }
 
-        .image-shadow {
-            width: 24rem;
-            height: 24rem;
+        img {
+            width: 100%; // Make the image responsive
+            max-width: 24rem; // Limit max width for larger displays
+            height: auto; // Maintain aspect ratio
             object-fit: cover;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }

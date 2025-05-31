@@ -51,11 +51,22 @@ function RegisterForm() {
 
     if (!passwordMatch) return;
 
-    const success = await register(formData);
-    if (success !== false) {
-      navigate("/dashboard");
+    const { success, user, error } = await register(formData);
+
+    if (success) {
+        console.log("Registration successful, redirecting...");
+        navigate("/signin");
+    } else {
+        console.error("❌ Registration error:", error);
+        alert(
+            typeof error === "string"
+                ? error
+                : Object.entries(error)
+                    .map(([key, val]) => `${key}: ${val.join ? val.join(", ") : val}`)
+                    .join("\n")
+        );
     }
-  };
+};
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
 

@@ -33,13 +33,19 @@ export const AuthProvider = ({ children }) => {
         setIsLoading(true);
         try {
             const user = await AuthService.register(formData);
-            setCurrentUser(user); // optional: auto login after register
+            setCurrentUser(user); // Set the current user after registration
+            return { success: true, user }; // Return user for immediate use if needed
         } catch (error) {
-            console.error("Registration failed:", error);
+            console.error("Registration failed:", error.response?.data || error.message);
+            return {
+                success: false,
+                error: error.response?.data || { detail: "Unknown error occurred" },
+            };
         } finally {
             setIsLoading(false);
         }
     };
+    
 
     const logout = async () => {
         await AuthService.logout();
