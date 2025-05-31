@@ -36,7 +36,10 @@ const MyLineChart = ({
         marginTop: "-4rem",
         cursor: "pointer",
       }}
-    >
+    > const formattedData = data.map((item) => ({
+      ...item,
+      timestamp: format(new Date(item.createdAt), "HH:mm:ss"),
+    }));
       <LineChart
         width={520}
         height={350}
