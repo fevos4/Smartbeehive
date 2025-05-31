@@ -19,11 +19,9 @@ const MyLineChart = ({
   dataKeys,
   colors = ["#82ca9d", "#8884d8", "#ff8042", "#ffc658"],
 }) => {
-  const formattedData = [...data]
-  .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) // ascending order
-  .map((item) => ({
+  const formattedData = data.map((item) => ({
     ...item,
-    timestamp: format(new Date(item.createdAt), "HH:mm:ss"),
+    timestamp: format(new Date(item.createdAt), "HH:mm"),
   }));
 
   return (
@@ -36,10 +34,7 @@ const MyLineChart = ({
         marginTop: "-4rem",
         cursor: "pointer",
       }}
-    > const formattedData = data.map((item) => ({
-      ...item,
-      timestamp: format(new Date(item.createdAt), "HH:mm:ss"),
-    }));
+    >
       <LineChart
         width={520}
         height={350}
