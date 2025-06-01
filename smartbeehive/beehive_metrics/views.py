@@ -12,6 +12,8 @@ from django.contrib.auth.models import User
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 
+print("🔍 Running alert check for user:", user)
+print("🚨 Metric values:", metric.Temperature, metric.Humidity, metric.Weight, metric.Battery_level)
 
 def check_and_send_alerts(user, metric):
     alerts = []

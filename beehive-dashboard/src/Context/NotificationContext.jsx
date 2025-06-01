@@ -28,41 +28,57 @@ export const NotificationProvider = ({ children }) => {
     // WebSocket real-time listener
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
-        if (!user || !user.access) return;
+        if (!user || !user.access) {
+            console.log("No user or access token, skipping WebSocket");
+            return;
+        }
 
-        const socket = new WebSocket("ws://127.0.0.1:8000/ws/alerts/");
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+        const wsUrl = `${wsProtocol}${window.location.hostname}:8000/ws/alerts/?token=${encodeURIComponent(user.access)}`;
+        let socket;
 
-        socket.onopen = () => {
-            console.log("✅ WebSocket connected");
-        };
+        const connect = () => {
+            console.log("Attempting WebSocket connection:", wsUrl);
+            socket = new WebSocket(wsUrl);
 
-        socket.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            console.log("📨 New WebSocket message:", data.message);
-
-            const newNotification = {
-                id: Date.now(), // Temporary unique ID
-                notification_message: data.message,
-                is_read: false,
+            socket.onopen = () => {
+                console.log("✅ WebSocket connected");
             };
 
-            setNotificationRecords((prev) => [...prev, newNotification]);
+            socket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                console.log("📨 New WebSocket message:", data.message);
+                const newNotification = {
+                    id: Date.now(),
+                    notification_message: data.message,
+                    is_read: false,
+                };
+                setNotificationRecords((prev) => [...prev, newNotification]);
+            };
+
+            socket.onerror = (error) => {
+                console.error("❌ WebSocket error:", error);
+            };
+
+            socket.onclose = (event) => {
+                console.log("🔌 WebSocket disconnected:", event.code, event.reason);
+                setTimeout(connect, 5000); // Reconnect after 5 seconds
+            };
         };
 
-        socket.onerror = (error) => {
-            console.error("❌ WebSocket error:", error);
-        };
+        connect();
 
-        socket.onclose = () => {
-            console.log("🔌 WebSocket disconnected");
+        return () => {
+            if (socket) {
+                socket.close();
+                console.log("WebSocket cleanup");
+            }
         };
-
-        return () => socket.close(); // Clean up
     }, []);
 
-    // Clear all
+    // Clear all notifications
     const clearAllNotifications = async () => {
-        setNotificationRecords([]); 
+        setNotificationRecords([]);
         try {
             await updateAllNotificationRecords();
         } catch (error) {
@@ -70,9 +86,9 @@ export const NotificationProvider = ({ children }) => {
         }
     };
 
-    // Clear one
+    // Clear one notification
     const clearNotification = async (notificationId) => {
-        const updated = notifications.filter(n => n.id !== notificationId);
+        const updated = notifications.filter((n) => n.id !== notificationId);
         setNotificationRecords(updated);
         try {
             await updateNotificationRecord(notificationId);
