@@ -26,10 +26,10 @@ const NotificationPopup = ({ notifications, onClose, onClearNotification,onClear
           <p className="no-notifications-message">There are no notifications</p>
         ) : (
           notifications.map((notification) => (
-            <div className="notification-item" key={notification._id}>
-              {notification.notificationMessage}
+            <div className="notification-item" key={notification.id}>
+              {notification.notification_message}
               <button
-                onClick={() => handleClearNotification(notification._id)}
+                onClick={() => handleClearNotification(notification.id)}
                 className="notification-close-icon"
               >
                 <FontAwesomeIcon icon={faTrash} />

@@ -6,7 +6,7 @@ const API_URL = `${PARENT_API_URL}/api/notifications/`;
 // Retrieve accessToken from localStorage
 const getAccessToken = () => {
     const user = JSON.parse(localStorage.getItem("user"));
-    if (!user || !user.accessToken) {
+    if (!user || !user.access) {
         throw new Error("Access token is missing or invalid");
     }
     return user.access;

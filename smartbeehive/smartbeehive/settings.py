@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-v5g)r$zs8lyd9kae+e%a&)@=wsu-2f-18g)92e8hoo)m6kr7mm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.43.91",'127.0.0.1', '192.168.204.91' , 'localhost',
+    '127.0.0.1',
+    'localhost:8000',]
 
 
 # Application definition
@@ -47,7 +49,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'notifications',
     'beehive_metrics',
-    'beehive'
+    'beehive',
+    'channels'
 ]
 
 REST_FRAMEWORK = {
@@ -155,3 +158,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ASGI_APPLICATION = 'smartbeehive.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)],
+        },
+    },
+}

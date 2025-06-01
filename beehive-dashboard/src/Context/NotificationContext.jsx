@@ -1,60 +1,102 @@
 import React, { createContext, useState, useEffect } from "react";
-import { getNotificationRecords, updateAllNotificationRecords, updateNotificationRecord } from "../Services/notificationService";
+import {
+    getNotificationRecords,
+    updateAllNotificationRecords,
+    updateNotificationRecord,
+} from "../Services/notificationService";
 
 export const NotificationContext = createContext();
 
 export const NotificationProvider = ({ children }) => {
     const [notifications, setNotificationRecords] = useState([]);
-    const [loading, setLoading] = useState(false);  // Add loading state to handle UI feedback
+    const [loading, setLoading] = useState(false);
 
-    // Fetch notification records
+    // Fetch existing notifications from backend
     const fetchNotificationRecords = async () => {
-        setLoading(true);  // Start loading
+        setLoading(true);
         try {
-            const notifications = await getNotificationRecords();
-            console.log("Successfully fetched notification records:", notifications);
-            setNotificationRecords(notifications);
+            const data = await getNotificationRecords();
+            console.log("✅ Fetched notifications:", data);
+            setNotificationRecords(data);
         } catch (error) {
-            console.error("Failed to fetch notification records:", error);
+            console.error("❌ Failed to fetch notifications:", error);
         } finally {
-            setLoading(false);  // End loading
+            setLoading(false);
         }
     };
 
+    // WebSocket real-time listener
     useEffect(() => {
-        fetchNotificationRecords();
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user || !user.access) return;
+
+        const socket = new WebSocket("ws://127.0.0.1:8000/ws/alerts/");
+
+        socket.onopen = () => {
+            console.log("✅ WebSocket connected");
+        };
+
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            console.log("📨 New WebSocket message:", data.message);
+
+            const newNotification = {
+                id: Date.now(), // Temporary unique ID
+                notification_message: data.message,
+                is_read: false,
+            };
+
+            setNotificationRecords((prev) => [...prev, newNotification]);
+        };
+
+        socket.onerror = (error) => {
+            console.error("❌ WebSocket error:", error);
+        };
+
+        socket.onclose = () => {
+            console.log("🔌 WebSocket disconnected");
+        };
+
+        return () => socket.close(); // Clean up
     }, []);
 
-    // Clear all notifications and mark them as read
+    // Clear all
     const clearAllNotifications = async () => {
-        setNotificationRecords([]); // Optimistically clear notifications in the UI
+        setNotificationRecords([]); 
         try {
             await updateAllNotificationRecords();
         } catch (error) {
             console.error("Error clearing all notifications:", error);
-            // Optionally handle failure here (e.g., show an error message or revert state)
         }
     };
 
-    // Clear a single notification and mark it as read
+    // Clear one
     const clearNotification = async (notificationId) => {
-        const updatedNotifications = notifications.filter(
-            (notification) => notification._id !== notificationId
-        );
-        console.log("Updated Notifications:", updatedNotifications);
-        setNotificationRecords(updatedNotifications);  // Optimistically update state
-
+        const updated = notifications.filter(n => n.id !== notificationId);
+        setNotificationRecords(updated);
         try {
             await updateNotificationRecord(notificationId);
         } catch (error) {
             console.error(`Error updating notification ${notificationId}:`, error);
-            // Optionally revert state update here if the API call fails
-            setNotificationRecords(notifications);  // Revert to previous state
+            setNotificationRecords(notifications); // Revert
         }
     };
 
+    // Initial load
+    useEffect(() => {
+        fetchNotificationRecords();
+    }, []);
+
     return (
-        <NotificationContext.Provider value={{ notifications, fetchNotificationRecords, clearAllNotifications, clearNotification, loading }}>
+        <NotificationContext.Provider
+            value={{
+                notifications,
+                fetchNotificationRecords,
+                clearAllNotifications,
+                clearNotification,
+                loading,
+            }}
+        >
             {children}
         </NotificationContext.Provider>
     );
